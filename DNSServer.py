@@ -50,13 +50,10 @@ salt = b'Tandon'  # Must be a byte-object
 password = 'rs9614@nyu.edu'  # Replace with your actual NYU email
 input_string = 'AlwaysWatching'
 
-# Encrypt and prepare TXT record string
+# Encrypt and encode clean for TXT
 encrypted_value = encrypt_with_aes(input_string, password, salt)
-encrypted_str = encrypted_value.decode('utf-8')
-
-# Optional check for debugging (commented out)
-# print("Encrypted:", encrypted_str)
-# print("Decrypted:", decrypt_with_aes(encrypted_str, password, salt))
+# Safe for TXT record (URL-safe base64)
+encrypted_str = base64.urlsafe_b64encode(encrypted_value).decode('utf-8')
 
 # For future use    
 def generate_sha256_hash(input_string):

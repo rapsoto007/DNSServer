@@ -25,7 +25,6 @@ PASSWORD = 'rs9614@nyu.edu'
 PLAINTEXT = 'AlwaysWatching'
 
 # Key generation
-
 def generate_aes_key(password, salt):
     kdf = PBKDF2HMAC(
         algorithm=hashes.SHA256(),
@@ -36,7 +35,6 @@ def generate_aes_key(password, salt):
     return base64.urlsafe_b64encode(kdf.derive(password.encode('utf-8')))
 
 # Encryption/Decryption wrappers
-
 def encrypt_with_aes(plaintext, password, salt):
     key = generate_aes_key(password, salt)
     return Fernet(key).encrypt(plaintext.encode('utf-8')).decode('utf-8')
@@ -49,7 +47,6 @@ def decrypt_with_aes(ciphertext, password, salt):
 encrypted_txt = encrypt_with_aes(PLAINTEXT, PASSWORD, SALT)
 
 # DNS Records
-
 dns_records = {
     'example.com.': {
         dns.rdatatype.A: '192.168.1.101',

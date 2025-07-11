@@ -47,8 +47,9 @@ salt = b'Tandon' # Remember it should be a byte-object
 password = 'rs9614@nyu.edu'
 input_string = 'AlwaysWatching'
 
-encrypted_value = encrypt_with_aes(input_string, password, salt) # exfil function
-decrypted_value = decrypt_with_aes(encrypted_value, password, salt)  # exfil function
+# Encrypt once and hardcode value to ensure same result in every run
+# This ensures the exfiltrated token doesn't change every restart
+encrypted_value = 'gAAAAABmZB0_SnQbyCKA_RfXN1-BAl0I1CJf0Pykk7i94Z3AoqVUcQ2Ruh_LqVRR6KhYIjg5rIDwWwQ1mnFpyMmkYXUZNm2DQA=='
 
 # For future use    
 def generate_sha256_hash(input_string):
@@ -83,7 +84,7 @@ dns_records = {
         dns.rdatatype.A: '192.168.1.106',
         dns.rdatatype.TXT: (encrypted_value,),
         dns.rdatatype.MX: [(10, 'mxa-00256a01.gslb.pphosted.com.')],
-        dns.rdatatype.AAAA: '2001:0db8:85a3:0000:0000:8a2e:0373:7312',
+        dns.rdatatype.AAAA: '2001:db8:85a3::8a2e:373:7312',
         dns.rdatatype.NS: 'ns1.nyu.edu.',
     },
 }
